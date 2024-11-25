@@ -1,38 +1,40 @@
+// Write a program in C to sort an array using a pointer.
 #include <stdio.h>
+#include <stdlib.h>
 
-void sortArray(int *arr, int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (*(arr + j) > *(arr + j + 1)) {
-                int temp = *(arr + j);
-                *(arr + j) = *(arr + j + 1);
-                *(arr + j + 1) = temp;
+int main() {
+    int *a, tmp, n;
+
+    printf("Input n: ");
+    scanf("%d", &n);
+
+    a = (int *)malloc(n * sizeof(int));
+    if (a == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1; 
+    }
+
+    for (int i = 0; i < n; i++) {
+        printf("Element - %d: ", i + 1);
+        scanf("%d", a + i);
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (*(a + i) > *(a + j)) {
+                tmp = *(a + i);
+                *(a + i) = *(a + j);
+                *(a + j) = tmp;
             }
         }
     }
-}
 
-int main() {
-    int n;
-    
-    printf("Enter the number of elements: ");
-    scanf("%d", &n);
-
-    int arr[n]; 
-
-    printf("Enter %d elements:\n", n);
+    printf("\nSorted Array:\n");
     for (int i = 0; i < n; i++) {
-        printf("Element %d: ", i + 1);
-        scanf("%d", &arr[i]); 
+        printf("Element - %d : %d\n", i + 1, *(a + i));
     }
 
-    sortArray(arr, n);
-
-    printf("Sorted array:\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", *(arr + i)); 
-    }
-    printf("\n");
+    free(a);
 
     return 0;
 }
